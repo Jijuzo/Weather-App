@@ -1,0 +1,385 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #1e213a;
+}
+
+.page {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.searchbar {
+  color: #e7e7eb;
+  background-color: #1e213a;
+}
+
+.search-params {
+  width: 100%;
+  height: 100%;
+}
+
+.close-button-container {
+  margin: 5% 5% 0 5%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-button {
+  color: #e7e7eb;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.search-input-flex {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  margin: 5% 5% 50px 5%;
+}
+
+.search-input-container {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #1e213a;
+  border: 1px solid #e7e7eb;
+}
+
+.search-input {
+  width: 85%;
+  height: 40px;
+  color: #e7e7eb;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.search-input-activate {
+  width: 25%;
+  overflow: hidden;
+  font-family: "Raleway";
+  font-weight: 600;
+  font-size: 16px;
+  border-style: none;
+  cursor: pointer;
+  color: #e7e7eb;
+  background-color: #3c47e9;
+}
+
+.location-search-div {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px;
+}
+
+.search-button {
+  width: 160px;
+  height: 40px;
+  cursor: pointer;
+  color: #e7e7eb;
+  background-color: #6e707a;
+  border-style: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.weather-image-container {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+      rgba(30, 33, 58, 0.95) 100%,
+      rgba(30, 33, 58, 0.95) 100%
+    ),
+    url("./assets/Cloud-background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 145%;
+}
+
+.weather-image {
+  width: 80%;
+  object-fit: contain;
+}
+
+.current-weather-container {
+  font-family: "Raleway";
+  text-align: center;
+}
+
+.current-weather {
+  margin: 0px;
+  font-weight: 500;
+  font-size: 144px;
+  color: #e7e7eb;
+}
+
+.current-weather-unit {
+  font-weight: 100;
+  font-size: 48px;
+  color: #a09fb1;
+}
+
+.current-condition {
+  font-weight: 600;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10vh;
+  color: #a09fb1;
+}
+
+.current-date {
+  font-weight: 500;
+  font-size: 18px;
+  color: #88869d;
+}
+
+.current-location {
+  font-weight: 600;
+  font-size: 18px;
+  color: #88869d;
+}
+
+.location-icon {
+  font-size: 18px !important;
+  vertical-align: text-bottom;
+}
+
+.rightside {
+  position: relative;
+  height: 100%;
+  padding: 5vh 7vw 1vh 7vw;
+  color: #e7e7eb;
+  background-color: #100e1d;
+}
+
+.unit-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.top-button {
+  width: 40px;
+  height: 40px;
+  color: #e7e7eb;
+  background-color: #585676;
+  cursor: pointer;
+  border: solid 1px transparent;
+  border-radius: 54px;
+}
+
+.top-button.active {
+  color: #110e3c;
+  background-color: #e7e7eb;
+}
+
+.forecast-container {
+  width: 100%;
+  margin: 6vh auto 8vh auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forecast {
+  width: 10vw;
+  height: 20vh;
+  padding: 1%;
+  font-family: "Raleway";
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5%;
+  background-color: #1e213a;
+}
+
+.forecast-date {
+  margin: 0;
+  color: #e7e7eb;
+}
+
+.forecast-image {
+  width: 100%;
+  height: 50%;
+  object-fit: contain;
+}
+
+.forecast-temp-container {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.forecast-max-temp {
+  color: #e7e7eb;
+}
+
+.forecast-min-temp {
+  color: #a09fb1;
+}
+
+.hightlights-header {
+  font-family: "Raleway";
+  font-weight: 700;
+  font-size: 24px;
+  color: #e7e7eb;
+}
+
+.hightlights-container {
+  height: 40vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 3fr 2fr;
+  gap: 3vh 2vw;
+}
+
+.highlight {
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #1e213a;
+}
+
+.highlight-main {
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Raleway";
+  font-weight: 700;
+  font-size: 64px;
+  gap: 10px;
+  color: #e7e7eb;
+}
+
+.highlight-name {
+  margin: 0px;
+  font-family: "Raleway";
+  font-weight: 500;
+  font-size: 20px;
+  color: #e7e7eb;
+}
+
+.highlight-additional {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3%;
+  font-family: "Raleway";
+  font-weight: 500;
+  font-size: 16px;
+  color: #e7e7eb;
+}
+
+.highlight-value {
+  margin: 0;
+}
+
+.wind-direction-icon {
+  font-size: 20px !important;
+  vertical-align: text-bottom;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  /* transform: rotate(-90deg); */
+}
+
+.slider {
+  height: 8px;
+  width: 70%;
+  background-color: #e7e7eb;
+  border-radius: 80px;
+}
+
+.slider-value {
+  height: 100%;
+  background-color: #ffec65;
+  border-radius: inherit;
+}
+
+.slider-numbers {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+}
+
+.footer {
+  width: 85%;
+  position: absolute;
+  bottom: 15px;
+  text-align: center;
+  font-family: "Montserrat";
+  font-size: 14px;
+  font-weight: 500;
+  color: #a09fb1;
+}
+
+.link {
+  font-weight: 700;
+  color: #b9bdcf;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .searchbar {
+    min-height: 100vh;
+  }
+
+  .search-input-flex {
+    gap: 10px;
+  }
+
+  .unit-buttons {
+    justify-content: center;
+  }
+
+  .forecast-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5%;
+  }
+
+  .forecast {
+    width: 120px;
+    height: 150px;
+    padding: 2%;
+    margin-bottom: 5%;
+  }
+
+  .hightlights-header {
+    text-align: center;
+  }
+
+  .hightlights-container {
+    height: 47rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 300px) {
+  .hightlights-container {
+    height: 54rem;
+  }
+}
