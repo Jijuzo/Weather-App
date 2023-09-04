@@ -1,0 +1,20 @@
+.weather-image-container {
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+      rgba(30, 33, 58, 0.95) 100%,
+      rgba(30, 33, 58, 0.95) 100%
+    ),
+    url("./assets/Cloud-background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 145%;
+}
+
+.weather-image {
+  width: 80%;
+  height: 100%;
+  object-fit: contain;
+}
