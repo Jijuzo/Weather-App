@@ -6,9 +6,9 @@ import { DotSpinner } from "@uiball/loaders";
 
 const App = () => {
   const baseUrl = "http://api.openweathermap.org";
-  const [isActive, setIsActive] = useState(false);
-  const [location, setLocation] = useState("");
-  const [units, setUnits] = useState("metric");
+  const [isActive, onSetIsActive] = useState(false);
+  const [location, onSetLocation] = useState("");
+  const [units, onSetUnits] = useState("metric");
   const [isUnitActive, setIsUnitActive] = useState("button-C");
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecastWeather, setForecastWeather] = useState(null);
@@ -118,8 +118,8 @@ const App = () => {
         <div className="page">
           <CurrentWeatherPanel
             isActive={isActive}
-            setLocation={setLocation}
-            setIsActive={setIsActive}
+            onSetLocation={onSetLocation}
+            onSetIsActive={onSetIsActive}
             location={location}
             FetchLocation={fetchLocation}
             getLocation={getLocation}
@@ -130,7 +130,7 @@ const App = () => {
           <DetailsPanel
             setIsUnitActive={setIsUnitActive}
             isUnitActive={isUnitActive}
-            setUnits={setUnits}
+            onSetUnits={onSetUnits}
             forecastWeather={forecastWeather}
             units={units}
             currentWeather={currentWeather}
