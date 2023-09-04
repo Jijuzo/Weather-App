@@ -1,79 +1,142 @@
-import { DetailsPanel } from "./forecast&highlights/DetailsPanel";
-import { CurrentWeatherPanel } from "./search&currentWeather/CurrentWeatherPanel";
+import { DetailsPanel } from "./weatherDetails/DetailsPanel";
+import { CurrentWeatherPanel } from "./currentWeather/CurrentWeatherPanel";
 import { createRoot } from "react-dom/client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { DotSpinner } from "@uiball/loaders";
 
 const App = () => {
+  const baseUrl = "http://api.openweathermap.org";
   const [isActive, setIsActive] = useState(false);
   const [location, setLocation] = useState("");
   const [units, setUnits] = useState("metric");
-  const [lat, setLat] = useState("50.45");
-  const [lon, setLon] = useState("30.52");
+  const [isUnitActive, setIsUnitActive] = useState("button-C");
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecastWeather, setForecastWeather] = useState(null);
+  const initialGcsValues = {
+    lat: "50.45",
+    lon: "30.52",
+  };
+  const [gcsValues, setGcsValues] = useState(initialGcsValues);
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function FetchLocation() {
-    const apiRes = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=f50b5a26f6680e02171d4a22c9dfcb53`
+  async function fetchLocation() {
+    const locationUrl = new URL(
+      `/geo/1.0/direct?q=${location}&limit=1&appid=f50b5a26f6680e02171d4a22c9dfcb53`,
+      baseUrl
     );
-    const response = await apiRes.json();
-    setLat(response[0].lat);
-    setLon(response[0].lon);
+    try {
+      const promise = await fetch(locationUrl);
+      if (!promise.ok) {
+        throw new Error(`HTTP error! Status: ${promise.status}`);
+      }
+      const result = await promise.json();
+      setGcsValues({
+        lat: `${result[0].lat}`,
+        lon: `${result[0].lon}`,
+      });
+    } catch (error) {
+      alert("Couldn't find a city with this name");
+    }
   }
 
-  async function FetchCurrentWeather() {
-    const apiRes = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=f50b5a26f6680e02171d4a22c9dfcb53`
+  async function fetchCurrentWeather() {
+    setIsLoading(true);
+    const currentWeatherUrl = new URL(
+      `/data/2.5/weather?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=f50b5a26f6680e02171d4a22c9dfcb53`,
+      baseUrl
     );
-    setCurrentWeather(await apiRes.json());
+    try {
+      const promise = await fetch(currentWeatherUrl);
+      if (!promise.ok) {
+        throw new Error(`HTTP error! Status: ${promise.status}`);
+      }
+      setCurrentWeather(await promise.json());
+    } catch (error) {
+      console.error("Error:", error);
+      setIsLoading(false);
+    }
   }
 
-  async function FetchForecastWeather() {
-    const apiRes = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=f50b5a26f6680e02171d4a22c9dfcb53`
+  async function fetchForecastWeather() {
+    const forecastWeatherurl = new URL(
+      `/data/2.5/forecast?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=f50b5a26f6680e02171d4a22c9dfcb53`,
+      baseUrl
     );
-    setForecastWeather(await apiRes.json());
+    try {
+      const promise = await fetch(forecastWeatherurl);
+      if (!promise.ok) {
+        throw new Error(`HTTP error! Status: ${promise.status}`);
+      }
+      setForecastWeather(await promise.json());
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error:", error);
+      setIsLoading(false);
+    }
   }
+
+  const memoizedFetchCurrentWeather = useCallback(fetchCurrentWeather, [
+    units,
+    gcsValues,
+  ]);
+  const memoizedFetchForecastWeather = useCallback(fetchForecastWeather, [
+    units,
+    gcsValues,
+  ]);
+
+  useEffect(() => {
+    memoizedFetchCurrentWeather();
+    memoizedFetchForecastWeather();
+  }, [memoizedFetchCurrentWeather, memoizedFetchForecastWeather]);
 
   function getLocation() {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setLat(latitude);
-        setLon(longitude);
+      ({ coords }) => {
+        const { latitude, longitude } = coords;
+        setGcsValues({
+          lat: `${latitude}`,
+          lon: `${longitude}`,
+        });
       },
-      (error) => console.log(error.message)
+      (error) => {
+        if (error.code === 1) {
+          alert("To use this function, allow access to your geolocation.");
+        } else {
+          alert("An error occurred while fetching your location.");
+        }
+      }
     );
   }
 
-  useEffect(() => {
-    getLocation();
-  }, []);
-
-  useEffect(() => {
-    FetchCurrentWeather();
-    FetchForecastWeather();
-  }, [units, lat, lon]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
-    <main className="page">
-      <CurrentWeatherPanel
-        isActive={isActive}
-        setLocation={setLocation}
-        setIsActive={setIsActive}
-        location={location}
-        FetchLocation={FetchLocation}
-        getLocation={getLocation}
-        currentWeather={currentWeather}
-        units={units}
-      />
+    <main>
+      {isLoading ? (
+        <div className="spinner-container">
+          <DotSpinner size={50} color="#FFFFFF" />
+        </div>
+      ) : (
+        <div className="page">
+          <CurrentWeatherPanel
+            isActive={isActive}
+            setLocation={setLocation}
+            setIsActive={setIsActive}
+            location={location}
+            FetchLocation={fetchLocation}
+            getLocation={getLocation}
+            currentWeather={currentWeather}
+            units={units}
+          />
 
-      <DetailsPanel
-        setUnits={setUnits}
-        forecastWeather={forecastWeather}
-        units={units}
-        currentWeather={currentWeather}
-      />
+          <DetailsPanel
+            setIsUnitActive={setIsUnitActive}
+            isUnitActive={isUnitActive}
+            setUnits={setUnits}
+            forecastWeather={forecastWeather}
+            units={units}
+            currentWeather={currentWeather}
+          />
+        </div>
+      )}
     </main>
   );
 };
