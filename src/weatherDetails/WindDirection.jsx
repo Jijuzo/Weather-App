@@ -4,16 +4,21 @@ import "./WindDirection.css";
 export function WindDirection({ currentWeather }) {
   return (
     <div className="highlight-additional">
-      <span
-        className="material-symbols-outlined wind-direction-icon"
-        style={{
-          transform: `rotate(${currentWeather.wind.deg}deg)`,
-        }}
-      >
-        navigation
-      </span>
-      {"  "}
-      {degreesToText(currentWeather.wind.deg)}
+      {degreesToText(currentWeather.wind.deg) === "no data" ? (
+        "wind direction is unknown"
+      ) : (
+        <span>
+          <span
+            className="material-symbols-outlined wind-direction-icon"
+            style={{
+              transform: `rotate(${currentWeather.wind.deg}deg)`,
+            }}
+          >
+            navigation
+          </span>
+          {`  ${degreesToText(currentWeather.wind.deg)}`}
+        </span>
+      )}
     </div>
   );
 }
