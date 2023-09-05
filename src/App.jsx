@@ -28,7 +28,7 @@ const App = () => {
     }
   }, []);
 
-  async function fetchLocation() {
+  async function fetchLocation(location) {
     const locationUrl = new URL(
       `/geo/1.0/direct?q=${location}&limit=1&appid=8f8fc4b4047f83a4ee00b8214d7106b1`,
       baseUrl

@@ -18,7 +18,7 @@ export const SearchPanel = ({
       return;
     }
 
-    FetchLocation();
+    FetchLocation(location);
     onSetIsActive(false);
     onSetLocation("");
   }
@@ -58,7 +58,13 @@ export const SearchPanel = ({
           Search
         </button>
       </div>
-      <SearchHistory searchHistory={searchHistory} />
+      <SearchHistory
+        searchHistory={searchHistory}
+        onSetLocation={onSetLocation}
+        FetchLocation={FetchLocation}
+        onSetIsActive={onSetIsActive}
+        location={location}
+      />
     </div>
   );
 };
