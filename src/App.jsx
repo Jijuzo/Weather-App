@@ -3,6 +3,7 @@ import { CurrentWeatherPanel } from "./currentWeather/CurrentWeatherPanel";
 import { createRoot } from "react-dom/client";
 import { useEffect, useState, useCallback } from "react";
 import { DotSpinner } from "@uiball/loaders";
+import { setSearchHistoryFunc } from "./utils/setSearchHistory";
 
 const App = () => {
   const baseUrl = "http://api.openweathermap.org";
@@ -18,10 +19,18 @@ const App = () => {
   };
   const [gcsValues, setGcsValues] = useState(initialGcsValues);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
+
+  useEffect(() => {
+    const storedHistory = JSON.parse(localStorage.getItem("searchHistory"));
+    if (storedHistory) {
+      setSearchHistory(storedHistory);
+    }
+  }, []);
 
   async function fetchLocation() {
     const locationUrl = new URL(
-      `/geo/1.0/direct?q=${location}&limit=1&appid=f50b5a26f6680e02171d4a22c9dfcb53`,
+      `/geo/1.0/direct?q=${location}&limit=1&appid=8f8fc4b4047f83a4ee00b8214d7106b1`,
       baseUrl
     );
     try {
@@ -34,6 +43,7 @@ const App = () => {
         lat: `${result[0].lat}`,
         lon: `${result[0].lon}`,
       });
+      setSearchHistoryFunc(searchHistory, setSearchHistory, location);
     } catch (error) {
       alert("Couldn't find a city with this name");
     }
@@ -42,7 +52,7 @@ const App = () => {
   async function fetchCurrentWeather() {
     setIsLoading(true);
     const currentWeatherUrl = new URL(
-      `/data/2.5/weather?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=f50b5a26f6680e02171d4a22c9dfcb53`,
+      `/data/2.5/weather?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=8f8fc4b4047f83a4ee00b8214d7106b1`,
       baseUrl
     );
     try {
@@ -59,7 +69,7 @@ const App = () => {
 
   async function fetchForecastWeather() {
     const forecastWeatherurl = new URL(
-      `/data/2.5/forecast?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=f50b5a26f6680e02171d4a22c9dfcb53`,
+      `/data/2.5/forecast?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=8f8fc4b4047f83a4ee00b8214d7106b1`,
       baseUrl
     );
     try {
@@ -118,6 +128,8 @@ const App = () => {
         <div className="page">
           <CurrentWeatherPanel
             isActive={isActive}
+            searchHistory={searchHistory}
+            setSearchHistory={setSearchHistory}
             onSetLocation={onSetLocation}
             onSetIsActive={onSetIsActive}
             location={location}

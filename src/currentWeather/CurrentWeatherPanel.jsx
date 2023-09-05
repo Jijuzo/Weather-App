@@ -5,6 +5,7 @@ import "./CurrentWeatherPanel.css";
 
 export const CurrentWeatherPanel = ({
   isActive,
+  searchHistory,
   onSetLocation,
   onSetIsActive,
   location,
@@ -21,6 +22,7 @@ export const CurrentWeatherPanel = ({
         onSetIsActive={onSetIsActive}
         location={location}
         FetchLocation={FetchLocation}
+        searchHistory={searchHistory}
       />
 
       <div className={isActive === true ? "hidden" : ""}>

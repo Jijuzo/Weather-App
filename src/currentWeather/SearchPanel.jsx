@@ -1,5 +1,6 @@
 import React from "react";
 import "./SearchPanel.css";
+import { SearchHistory } from "./SearchHistory";
 
 export const SearchPanel = ({
   isActive,
@@ -7,6 +8,7 @@ export const SearchPanel = ({
   onSetIsActive,
   location,
   FetchLocation,
+  searchHistory,
 }) => {
   function handleSubmit(event) {
     event.preventDefault();
@@ -56,6 +58,7 @@ export const SearchPanel = ({
           Search
         </button>
       </div>
+      <SearchHistory searchHistory={searchHistory} />
     </div>
   );
 };

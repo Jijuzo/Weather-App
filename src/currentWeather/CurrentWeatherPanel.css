@@ -1,7 +1,6 @@
 .searchbar {
   color: var(--color-white);
   background-color: var(--color-dark-blue);
-  position: relative;
 }
 
 .location-search-div {

@@ -1,0 +1,30 @@
+.search-history-div {
+  font-family: var(--font-family-default);
+  color: var(--color-white);
+  margin: 5% 5% 50px 5%;
+}
+
+.search-history-header {
+}
+
+.search-history-ul {
+  list-style: none;
+  padding: 0;
+}
+
+.search-history-ul-item {
+  position: relative;
+  padding: 20px 10px;
+  text-transform: capitalize;
+}
+
+.search-history-ul-item:hover {
+  cursor: pointer;
+  border: 1px solid var(--color-dark-gray-violet);
+}
+
+.search-history-ul-item:hover::before {
+  content: "⮞ "; /* Unicode arrow character, you can replace it with your preferred arrow */
+  position: absolute;
+  right: 10px; /* Adjust the right distance as needed */
+}
