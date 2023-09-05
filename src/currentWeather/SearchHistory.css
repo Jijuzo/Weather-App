@@ -21,8 +21,8 @@
 }
 
 .search-history-ul-item:hover::before {
-  content: "⮞ "; /* Unicode arrow character, you can replace it with your preferred arrow */
+  content: "⮞ ";
   position: absolute;
-  right: 10px; /* Adjust the right distance as needed */
+  right: 10px;
   color: var(--color-dark-gray-violet);
 }
