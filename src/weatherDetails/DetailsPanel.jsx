@@ -6,8 +6,8 @@ import { CurrentWeatherHighlights } from "./CurrentWeatherHighlights";
 import "./DetailsPanel.css";
 
 export const DetailsPanel = ({
-  isUnitActive,
-  setIsUnitActive,
+  currentUnit,
+  setCurrentUnit,
   onSetUnits,
   forecastWeather,
   units,
@@ -17,8 +17,8 @@ export const DetailsPanel = ({
     <div className="rightside">
       <UnitButtons
         onSetUnits={onSetUnits}
-        isUnitActive={isUnitActive}
-        setIsUnitActive={setIsUnitActive}
+        currentUnit={currentUnit}
+        setCurrentUnit={setCurrentUnit}
       />
       {forecastWeather && (
         <Forecasts forecastWeather={forecastWeather} units={units} />

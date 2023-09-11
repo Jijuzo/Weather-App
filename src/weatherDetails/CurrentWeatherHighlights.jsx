@@ -2,7 +2,7 @@ import { Highlight } from "./Highlight";
 import "./CurrentWeatherHighlights.css";
 
 export const CurrentWeatherHighlights = ({ currentWeather, units }) => {
-  const props = [
+  const highlights = [
     {
       name: "Wind status",
       value: currentWeather.wind.speed.toFixed(1),
@@ -39,7 +39,7 @@ export const CurrentWeatherHighlights = ({ currentWeather, units }) => {
 
   return (
     <div className="hightlights-container">
-      {props.map((item, idx) => (
+      {highlights.map((item, idx) => (
         <Highlight
           idx={idx}
           units={units}
