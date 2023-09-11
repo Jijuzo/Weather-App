@@ -3,9 +3,16 @@ import { formatDate } from "../utils/formatDate";
 import { Forecast } from "./Forecast";
 import "./Forecasts.css";
 
+// Define the starting index for the forecast data.
+const startPoint = 6;
+// Define the ending index for the forecast data.
+const endPoint = 38;
+// Define the step size to iterate through the forecast data.
+const step = 8;
+
 export const Forecasts = ({ forecastWeather, units }) => {
   const forecasts = [];
-  for (let i = 6; i <= 38; i += 8) {
+  for (let i = startPoint; i <= endPoint; i += step) {
     forecasts.push({
       date: formatDate(forecastWeather.list[i].dt),
       icon: forecastWeather.list[i].weather[0].icon,
