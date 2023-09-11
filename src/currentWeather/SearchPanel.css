@@ -34,7 +34,7 @@
 }
 
 .search-icon {
-  font-size: var(--font-size-icon) !important;
+  font-size: var(--font-size-icon);
   vertical-align: text-bottom;
 }
 
