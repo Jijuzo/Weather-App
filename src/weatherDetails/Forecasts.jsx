@@ -9,8 +9,8 @@ export const Forecasts = ({ forecastWeather, units }) => {
     forecasts.push({
       date: formatDate(forecastWeather.list[i].dt),
       icon: forecastWeather.list[i].weather[0].icon,
-      temp_max: Math.round(forecastWeather.list[i].main.temp_max),
-      temp_min: Math.round(forecastWeather.list[i].main.temp_min),
+      tempMax: Math.round(forecastWeather.list[i].main.temp_max),
+      tempMin: Math.round(forecastWeather.list[i].main.temp_min),
       description: forecastWeather.list[i].weather[0].main,
     });
   }
@@ -23,8 +23,8 @@ export const Forecasts = ({ forecastWeather, units }) => {
             key={idx}
             date={item.date}
             icon={item.icon}
-            temp_max={item.temp_max}
-            temp_min={item.temp_min}
+            tempMax={item.tempMax}
+            tempMin={item.tempMin}
             description={item.description}
             units={units}
           />

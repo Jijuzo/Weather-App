@@ -5,8 +5,8 @@ import { TemperatureUnit } from "./TemperatureUnit";
 export const Forecast = ({
   date,
   icon,
-  temp_max,
-  temp_min,
+  tempMax,
+  tempMin,
   description,
   units,
 }) => {
@@ -16,11 +16,11 @@ export const Forecast = ({
       <ForecastImage icon={icon} description={description} />
       <div className="forecast-temp-container">
         <p className="forecast-max-temp">
-          {temp_max}
+          {tempMax}
           <TemperatureUnit units={units} />
         </p>
         <p className="forecast-min-temp">
-          {temp_min}
+          {tempMin}
           <TemperatureUnit units={units} />
         </p>
       </div>
