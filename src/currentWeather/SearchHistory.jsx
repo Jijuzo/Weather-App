@@ -3,11 +3,11 @@ import "./SearchHistory.css";
 export const SearchHistory = ({
   searchHistory,
   onSetLocation,
-  FetchLocation,
+  fetchLocation,
   onSetIsActive,
 }) => {
   function handleClick(event) {
-    FetchLocation(event.target.value);
+    fetchLocation(event.target.value);
     onSetIsActive(false);
     onSetLocation("");
   }

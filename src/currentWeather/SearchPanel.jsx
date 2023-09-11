@@ -7,7 +7,7 @@ export const SearchPanel = ({
   onSetLocation,
   onSetIsActive,
   location,
-  FetchLocation,
+  fetchLocation,
   searchHistory,
 }) => {
   function handleSubmit(event) {
@@ -18,7 +18,7 @@ export const SearchPanel = ({
       return;
     }
 
-    FetchLocation(location);
+    fetchLocation(location);
     onSetIsActive(false);
     onSetLocation("");
   }
@@ -61,7 +61,7 @@ export const SearchPanel = ({
       <SearchHistory
         searchHistory={searchHistory}
         onSetLocation={onSetLocation}
-        FetchLocation={FetchLocation}
+        fetchLocation={fetchLocation}
         onSetIsActive={onSetIsActive}
         location={location}
       />

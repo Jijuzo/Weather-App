@@ -9,7 +9,7 @@ export const CurrentWeatherPanel = ({
   onSetLocation,
   onSetIsActive,
   location,
-  FetchLocation,
+  fetchLocation,
   getLocation,
   currentWeather,
   units,
@@ -21,7 +21,7 @@ export const CurrentWeatherPanel = ({
         onSetLocation={onSetLocation}
         onSetIsActive={onSetIsActive}
         location={location}
-        FetchLocation={FetchLocation}
+        fetchLocation={fetchLocation}
         searchHistory={searchHistory}
       />
 
