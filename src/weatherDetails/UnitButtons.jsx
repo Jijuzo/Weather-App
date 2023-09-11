@@ -1,8 +1,8 @@
 import "./UnitButtons.css";
 
-export const UnitButtons = ({ isUnitActive, onSetUnits, setIsUnitActive }) => {
+export const UnitButtons = ({ currentUnit, onSetUnits, setCurrentUnit }) => {
   const onUnitChange = (activeId, units) => {
-    setIsUnitActive(activeId);
+    setCurrentUnit(activeId);
     onSetUnits(units);
   };
 
@@ -12,7 +12,7 @@ export const UnitButtons = ({ isUnitActive, onSetUnits, setIsUnitActive }) => {
         onClick={(e) => {
           onUnitChange(e.target.id, "metric");
         }}
-        className={`${isUnitActive === "button-C" ? "active" : ""} top-button`}
+        className={`${currentUnit === "button-C" ? "active" : ""} top-button`}
         id={`button-C`}
       >
         °C
@@ -21,7 +21,7 @@ export const UnitButtons = ({ isUnitActive, onSetUnits, setIsUnitActive }) => {
         onClick={(e) => {
           onUnitChange(e.target.id, "imperial");
         }}
-        className={`${isUnitActive === "button-F" ? "active" : ""} top-button`}
+        className={`${currentUnit === "button-F" ? "active" : ""} top-button`}
         id={`button-F`}
       >
         °F
