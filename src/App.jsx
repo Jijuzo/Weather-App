@@ -1,25 +1,93 @@
 import { DetailsPanel } from "./weatherDetails/DetailsPanel";
 import { CurrentWeatherPanel } from "./currentWeather/CurrentWeatherPanel";
 import { createRoot } from "react-dom/client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { DotSpinner } from "@uiball/loaders";
-import { setSearchHistoryFunc } from "./utils/setSearchHistory";
+
+const baseUrl = "http://api.openweathermap.org";
+const apiKey = "52cd117b0f18fb74a6f94c5c52c15753";
+const initialGcsValues = {
+  lat: "50.45",
+  lon: "30.52",
+};
+
+async function fetchCurrentWeather(gcsValues, units) {
+  const currentWeatherUrl = new URL("/data/2.5/weather", baseUrl);
+  setSearchParams(currentWeatherUrl, gcsValues.lat, gcsValues.lon, units);
+  try {
+    const promise = await fetch(currentWeatherUrl);
+    if (!promise.ok) {
+      throw new Error(`HTTP error! Status: ${promise.status}`);
+    }
+    return await promise.json();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+async function fetchForecastWeather(gcsValues, units) {
+  const forecastWeatherUrl = new URL("/data/2.5/forecast", baseUrl);
+  setSearchParams(forecastWeatherUrl, gcsValues.lat, gcsValues.lon, units);
+  try {
+    const promise = await fetch(forecastWeatherUrl);
+    if (!promise.ok) {
+      throw new Error(`HTTP error! Status: ${promise.status}`);
+    }
+    return await promise.json();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+const setSearchParams = (givenUrl, lat, lon, units) => {
+  const searchParams = givenUrl.searchParams;
+  searchParams.append("lat", lat);
+  searchParams.append("lon", lon);
+  searchParams.append("units", units);
+  searchParams.append("appid", apiKey);
+};
 
 const App = () => {
-  const baseUrl = "http://api.openweathermap.org";
   const [isActive, onSetIsActive] = useState(false);
   const [location, onSetLocation] = useState("");
   const [units, onSetUnits] = useState("metric");
-  const [isUnitActive, setIsUnitActive] = useState("button-C");
+  const [currentUnit, setCurrentUnit] = useState("button-C");
   const [currentWeather, setCurrentWeather] = useState(null);
   const [forecastWeather, setForecastWeather] = useState(null);
-  const initialGcsValues = {
-    lat: "50.45",
-    lon: "30.52",
-  };
   const [gcsValues, setGcsValues] = useState(initialGcsValues);
   const [isLoading, setIsLoading] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
+
+  async function fetchLocation(location) {
+    const locationUrl = new URL("/geo/1.0/direct", baseUrl);
+    const searchParams = locationUrl.searchParams;
+    searchParams.append("q", location);
+    searchParams.append("limit", 1);
+    searchParams.append("appid", apiKey);
+    try {
+      const promise = await fetch(locationUrl);
+      if (!promise.ok) {
+        throw new Error(`HTTP error! Status: ${promise.status}`);
+      }
+      const [result] = await promise.json();
+      const { lat, lon } = result;
+      setGcsValues({ lat: lat, lon: lon });
+
+      const locationIndex = searchHistory.indexOf(location);
+      if (locationIndex !== -1) {
+        searchHistory.splice(locationIndex, 1);
+      }
+      if (!searchHistory.includes(location)) {
+        setSearchHistory((prevLocation) => [location, ...prevLocation]);
+        localStorage.setItem(
+          "searchHistory",
+          JSON.stringify([location, ...searchHistory])
+        );
+      }
+    } catch (error) {
+      alert("Couldn't find a city with this name");
+    }
+  }
 
   useEffect(() => {
     const storedHistory = JSON.parse(localStorage.getItem("searchHistory"));
@@ -28,84 +96,32 @@ const App = () => {
     }
   }, []);
 
-  async function fetchLocation(location) {
-    const locationUrl = new URL(
-      `/geo/1.0/direct?q=${location}&limit=1&appid=8f8fc4b4047f83a4ee00b8214d7106b1`,
-      baseUrl
-    );
-    try {
-      const promise = await fetch(locationUrl);
-      if (!promise.ok) {
-        throw new Error(`HTTP error! Status: ${promise.status}`);
-      }
-      const result = await promise.json();
-      setGcsValues({
-        lat: `${result[0].lat}`,
-        lon: `${result[0].lon}`,
-      });
-      setSearchHistoryFunc(searchHistory, setSearchHistory, location);
-    } catch (error) {
-      alert("Couldn't find a city with this name");
-    }
-  }
-
-  async function fetchCurrentWeather() {
-    setIsLoading(true);
-    const currentWeatherUrl = new URL(
-      `/data/2.5/weather?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=8f8fc4b4047f83a4ee00b8214d7106b1`,
-      baseUrl
-    );
-    try {
-      const promise = await fetch(currentWeatherUrl);
-      if (!promise.ok) {
-        throw new Error(`HTTP error! Status: ${promise.status}`);
-      }
-      setCurrentWeather(await promise.json());
-    } catch (error) {
-      console.error("Error:", error);
-      setIsLoading(false);
-    }
-  }
-
-  async function fetchForecastWeather() {
-    const forecastWeatherurl = new URL(
-      `/data/2.5/forecast?lat=${gcsValues.lat}&lon=${gcsValues.lon}&units=${units}&appid=8f8fc4b4047f83a4ee00b8214d7106b1`,
-      baseUrl
-    );
-    try {
-      const promise = await fetch(forecastWeatherurl);
-      if (!promise.ok) {
-        throw new Error(`HTTP error! Status: ${promise.status}`);
-      }
-      setForecastWeather(await promise.json());
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error:", error);
-      setIsLoading(false);
-    }
-  }
-
-  const memoizedFetchCurrentWeather = useCallback(fetchCurrentWeather, [
-    units,
-    gcsValues,
-  ]);
-  const memoizedFetchForecastWeather = useCallback(fetchForecastWeather, [
-    units,
-    gcsValues,
-  ]);
-
   useEffect(() => {
-    memoizedFetchCurrentWeather();
-    memoizedFetchForecastWeather();
-  }, [memoizedFetchCurrentWeather, memoizedFetchForecastWeather]);
+    const fetchRequaredData = async () => {
+      setIsLoading(true);
+      try {
+        const [weather, forecast] = await Promise.all([
+          fetchCurrentWeather(gcsValues, units),
+          fetchForecastWeather(gcsValues, units),
+        ]);
+        setCurrentWeather(weather);
+        setForecastWeather(forecast);
+      } catch (error) {
+        console.log("mgaga", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchRequaredData();
+  }, [gcsValues, units]);
 
   function getLocation() {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const { latitude, longitude } = coords;
         setGcsValues({
-          lat: `${latitude}`,
-          lon: `${longitude}`,
+          lat: latitude,
+          lon: longitude,
         });
       },
       (error) => {
@@ -133,15 +149,15 @@ const App = () => {
             onSetLocation={onSetLocation}
             onSetIsActive={onSetIsActive}
             location={location}
-            FetchLocation={fetchLocation}
+            fetchLocation={fetchLocation}
             getLocation={getLocation}
             currentWeather={currentWeather}
             units={units}
           />
 
           <DetailsPanel
-            setIsUnitActive={setIsUnitActive}
-            isUnitActive={isUnitActive}
+            setCurrentUnit={setCurrentUnit}
+            currentUnit={currentUnit}
             onSetUnits={onSetUnits}
             forecastWeather={forecastWeather}
             units={units}
