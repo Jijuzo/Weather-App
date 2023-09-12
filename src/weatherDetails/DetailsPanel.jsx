@@ -3,9 +3,11 @@ import React from "react";
 import { UnitButtons } from "./UnitButtons";
 import { Forecasts } from "./Forecasts";
 import { CurrentWeatherHighlights } from "./CurrentWeatherHighlights";
+import { ErrorAlert } from "./ErrorAlert";
 import "./DetailsPanel.css";
 
 export const DetailsPanel = ({
+  fetchError,
   currentUnit,
   setCurrentUnit,
   onSetUnits,
@@ -20,10 +22,11 @@ export const DetailsPanel = ({
         currentUnit={currentUnit}
         setCurrentUnit={setCurrentUnit}
       />
-      {forecastWeather && (
+      {forecastWeather && currentWeather && (
         <Forecasts forecastWeather={forecastWeather} units={units} />
       )}
-      {currentWeather && (
+      <ErrorAlert error={fetchError} />
+      {forecastWeather && currentWeather && (
         <div>
           <h2 className="hightlights-header">Today’s Hightlights</h2>
           <CurrentWeatherHighlights

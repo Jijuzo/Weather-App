@@ -12,6 +12,7 @@ export const CurrentWeatherPanel = ({
   fetchLocation,
   getLocation,
   currentWeather,
+  forecastWeather,
   units,
 }) => {
   return (
@@ -39,7 +40,7 @@ export const CurrentWeatherPanel = ({
             <span className="material-symbols-outlined">my_location</span>
           </button>
         </div>
-        {currentWeather && (
+        {currentWeather && forecastWeather && (
           <CurrentWeatherAside currentWeather={currentWeather} units={units} />
         )}
       </div>

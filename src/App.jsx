@@ -11,7 +11,8 @@ const initialGcsValues = {
   lon: "30.52",
 };
 
-async function fetchCurrentWeather(gcsValues, units) {
+async function fetchCurrentWeather(gcsValues, units, setPageError) {
+  setPageError(null);
   const currentWeatherUrl = new URL("/data/2.5/weather", baseUrl);
   setSearchParams(currentWeatherUrl, gcsValues.lat, gcsValues.lon, units);
   try {
@@ -22,10 +23,12 @@ async function fetchCurrentWeather(gcsValues, units) {
     return await promise.json();
   } catch (error) {
     console.error("Error:", error);
+    setPageError("smthWrong");
   }
 }
 
-async function fetchForecastWeather(gcsValues, units) {
+async function fetchForecastWeather(gcsValues, units, setPageError) {
+  setPageError(null);
   const forecastWeatherUrl = new URL("/data/2.5/forecast", baseUrl);
   setSearchParams(forecastWeatherUrl, gcsValues.lat, gcsValues.lon, units);
   try {
@@ -36,6 +39,7 @@ async function fetchForecastWeather(gcsValues, units) {
     return await promise.json();
   } catch (error) {
     console.error("Error:", error);
+    setPageError("smthWrong");
   }
 }
 
@@ -57,6 +61,7 @@ const App = () => {
   const [gcsValues, setGcsValues] = useState(initialGcsValues);
   const [isLoading, setIsLoading] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
+  const [fetchError, setFetchError] = useState(null);
 
   async function fetchLocation(location) {
     const locationUrl = new URL("/geo/1.0/direct", baseUrl);
@@ -101,8 +106,8 @@ const App = () => {
       setIsLoading(true);
       try {
         const [weather, forecast] = await Promise.all([
-          fetchCurrentWeather(gcsValues, units),
-          fetchForecastWeather(gcsValues, units),
+          fetchCurrentWeather(gcsValues, units, setFetchError),
+          fetchForecastWeather(gcsValues, units, setFetchError),
         ]);
         setCurrentWeather(weather);
         setForecastWeather(forecast);
@@ -152,10 +157,12 @@ const App = () => {
             fetchLocation={fetchLocation}
             getLocation={getLocation}
             currentWeather={currentWeather}
+            forecastWeather={forecastWeather}
             units={units}
           />
 
           <DetailsPanel
+            fetchError={fetchError}
             setCurrentUnit={setCurrentUnit}
             currentUnit={currentUnit}
             onSetUnits={onSetUnits}
