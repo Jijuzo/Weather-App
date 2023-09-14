@@ -102,7 +102,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const fetchRequaredData = async () => {
+    const fetchRequiredData = async () => {
       setIsLoading(true);
       try {
         const [weather, forecast] = await Promise.all([
@@ -112,12 +112,12 @@ const App = () => {
         setCurrentWeather(weather);
         setForecastWeather(forecast);
       } catch (error) {
-        console.log("mgaga", error);
+        console.log("Error", error);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchRequaredData();
+    fetchRequiredData();
   }, [gcsValues, units]);
 
   function getLocation() {
