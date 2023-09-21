@@ -11,8 +11,8 @@ const initialGcsValues = {
   lon: "30.52",
 };
 
-async function fetchCurrentWeather(gcsValues, units, setPageError) {
-  setPageError(null);
+async function fetchCurrentWeather(gcsValues, units, onError) {
+  onError(null);
   const currentWeatherUrl = new URL("/data/2.5/weather", baseUrl);
   setSearchParams(currentWeatherUrl, gcsValues.lat, gcsValues.lon, units);
   try {
@@ -23,12 +23,12 @@ async function fetchCurrentWeather(gcsValues, units, setPageError) {
     return await promise.json();
   } catch (error) {
     console.error("Error:", error);
-    setPageError("smthWrong");
+    onError(error);
   }
 }
 
-async function fetchForecastWeather(gcsValues, units, setPageError) {
-  setPageError(null);
+async function fetchForecastWeather(gcsValues, units, onError) {
+  onError(null);
   const forecastWeatherUrl = new URL("/data/2.5/forecast", baseUrl);
   setSearchParams(forecastWeatherUrl, gcsValues.lat, gcsValues.lon, units);
   try {
@@ -39,7 +39,7 @@ async function fetchForecastWeather(gcsValues, units, setPageError) {
     return await promise.json();
   } catch (error) {
     console.error("Error:", error);
-    setPageError("smthWrong");
+    onError(error);
   }
 }
 
