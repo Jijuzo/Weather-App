@@ -1,8 +1,8 @@
 import "./ErrorAlert.css";
 
-const smthWrongText =
+const errorAlertText =
   "Something went wrong while downloading weather information. Please check your internet connection and try again.";
 
 export const ErrorAlert = ({ error }) => {
-  return error ? <div className="error-alert">{smthWrongText}</div> : null;
+  return error ? <div className="error-alert">{errorAlertText}</div> : null;
 };
