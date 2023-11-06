@@ -10,7 +10,6 @@ export const Footer = () => {
           Jijuzo
         </a>
       </strong>{" "}
-      - devChallenges.io
     </footer>
   );
 };
