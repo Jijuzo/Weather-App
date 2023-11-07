@@ -1,0 +1,13 @@
+.forecast-container {
+  width: 100%;
+  margin: 6vh auto 8vh auto;
+  display: flex;
+  justify-content: space-between;
+}
+@media (max-width: 700px) {
+  .forecast-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5%;
+  }
+}

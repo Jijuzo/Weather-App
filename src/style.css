@@ -1,0 +1,89 @@
+:root {
+  --font-family-default: "Raleway";
+  --font-size-current-weather-temp: 144px;
+  --font-size-current-weather-unit: 48px;
+  --font-size-current-condition: 36px;
+  --font-size-current-date: 18px;
+  --font-size-current-location: 18px;
+  --font-size-hightlights-header: 26px;
+  --font-size-highlight-main: 64px;
+  --font-size-highlight-name: 20px;
+  --font-size-forecast: 16px;
+  --font-size-search-input-button: 16px;
+  --font-size-search-history-ul: 16px;
+  --font-size-icon: 18px;
+  --font-size-footer: 14px;
+  --font-weight-default: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --color-white: #e7e7eb;
+  --color-light-gray: #a09fb1;
+  --color-gray-violet: #88869d;
+  --color-gray: #6e707a;
+  --color-dark-gray-violet: #585676;
+  --color-yellow: #ffec65;
+  --color-red: #f44336;
+  --color-blue: #3c47e9;
+  --color-dark-blue: #1e213a;
+  --color-black: #100e1d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-dark-blue);
+}
+
+.page {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+.top-button {
+  width: 40px;
+  height: 40px;
+  color: var(--color-white);
+  background-color: var(--color-dark-gray-violet);
+  cursor: pointer;
+  border: solid 1px transparent;
+  border-radius: 54px;
+}
+
+.top-button.active {
+  color: var(--color-dark-blue);
+  background-color: var(--color-white);
+}
+
+.spinner-container {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+}
+
+.highlight-additional {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3%;
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-default);
+  font-size: 16px;
+  color: var(--color-white);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .page {
+    display: flex;
+    flex-direction: column;
+  }
+}

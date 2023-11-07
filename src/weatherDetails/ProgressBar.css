@@ -1,0 +1,28 @@
+.slider {
+  height: 8px;
+  width: 70%;
+  background-color: var(--color-white);
+  border-radius: 80px;
+}
+
+.slider-value {
+  height: 100%;
+  background-color: var(--color-yellow);
+  border-radius: inherit;
+}
+
+.slider-numbers {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+}
+
+.slider-number {
+  margin: 0;
+}
+
+.slider-percent-char {
+  width: 70%;
+  margin: 0;
+  text-align: right;
+}

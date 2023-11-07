@@ -1,0 +1,20 @@
+.hightlights-container {
+  height: 40vh;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 3fr 2fr;
+  gap: 3vh 2vw;
+}
+@media (max-width: 700px) {
+  .hightlights-container {
+    height: 47rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 300px) {
+  .hightlights-container {
+    height: 54rem;
+  }
+}

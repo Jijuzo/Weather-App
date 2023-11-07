@@ -1,0 +1,42 @@
+.current-weather-container {
+  font-family: var(--font-family-default);
+  text-align: center;
+}
+
+.current-weather {
+  margin: 0px;
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size-current-weather-temp);
+  color: var(--color-white);
+}
+
+.current-weather-unit {
+  font-weight: 100;
+  font-size: var(--font-size-current-weather-unit);
+  color: var(--color-light-gray);
+}
+
+.current-condition {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-current-condition);
+  text-align: center;
+  margin-bottom: 10vh;
+  color: var(--color-light-gray);
+}
+
+.current-date {
+  font-weight: var(--font-weight-default);
+  font-size: var(--font-size-current-date);
+  color: var(--color-gray-violet);
+}
+
+.current-location {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-current-location);
+  color: var(--color-gray-violet);
+}
+
+.location-icon {
+  font-size: var(--font-size-icon);
+  vertical-align: text-bottom;
+}
