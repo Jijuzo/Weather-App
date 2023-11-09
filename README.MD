@@ -10,7 +10,6 @@ A simple weather application built with React, Vite, and TypeScript.
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Introduction
@@ -58,16 +57,6 @@ Before you begin, ensure you have met the following requirements:
 3. Enter a city name in the search bar and press the "Search" button to retrieve weather information.
 
 4. Enjoy checking the current weather conditions for your desired location!
-
-## Contributing
-
-Contributions are welcome! If you want to contribute to this project, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix: `git checkout -b feature/your-feature-name`.
-3. Make your changes and commit them: `git commit -m 'Add some feature'`.
-4. Push to your branch: `git push origin feature/your-feature-name`.
-5. Create a pull request to the `main` branch of this repository.
 
 ## License
 
