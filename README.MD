@@ -1,14 +1,12 @@
 # Weather App
 
-A simple weather application built with React, Vite, and TypeScript.
+Simple weather application built with React, Vite, and TypeScript.
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Features](#features)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 
@@ -25,14 +23,6 @@ The Weather App is a web application that allows users to check the current weat
 - Responsive design for use on desktop and mobile devices.
 
 ## Getting Started
-
-### Prerequisites
-
-Before you begin, ensure you have met the following requirements:
-
-- Node.js: Make sure you have Node.js installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
-
-### Installation
 
 1. Clone the repository:
 
