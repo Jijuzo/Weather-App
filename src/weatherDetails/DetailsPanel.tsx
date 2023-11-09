@@ -1,5 +1,4 @@
 import { Footer } from "./Footer";
-import React from "react";
 import { UnitButtons } from "./UnitButtons";
 import { Forecasts } from "./Forecasts";
 import { CurrentWeatherHighlights } from "./CurrentWeatherHighlights";
