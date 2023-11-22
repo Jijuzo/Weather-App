@@ -1,6 +1,6 @@
+import "./Highlight.css";
 import { WindDirection } from "./WindDirection";
 import { ProgressBar } from "./ProgressBar";
-import "./Highlight.css";
 import { CurrentWeather } from "../App";
 
 type ItemType = {
@@ -16,22 +16,22 @@ type HighlightProps = {
   idx: number;
   units: string;
   currentWeather: CurrentWeather;
-  item: ItemType;
+  highlight: ItemType;
 };
 
 export function Highlight({
   idx,
   units,
   currentWeather,
-  item,
+  highlight,
 }: HighlightProps) {
   return (
     <div className="highlight" key={idx}>
       <div className="highlight-main">
-        <p className="highlight-name">{item.name}</p>
+        <p className="highlight-name">{highlight.name}</p>
         <p className="highlight-value">
-          {item.value}{" "}
-          {units === "metric" ? item.unit.metric : item.unit.imperial}
+          {highlight.value}{" "}
+          {units === "metric" ? highlight.unit.metric : highlight.unit.imperial}
         </p>
       </div>
       {idx === 0 ? (
