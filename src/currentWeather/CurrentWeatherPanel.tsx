@@ -37,12 +37,7 @@ export const CurrentWeatherPanel = ({
           <button className="search-button" onClick={() => onSetIsActive(true)}>
             Search for places
           </button>
-          <button
-            className="top-button"
-            onClick={() => {
-              getLocation();
-            }}
-          >
+          <button className="top-button" onClick={getLocation}>
             <span className="material-symbols-outlined">my_location</span>
           </button>
         </div>
