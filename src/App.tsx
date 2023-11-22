@@ -7,12 +7,12 @@ import { DotSpinner } from "@uiball/loaders";
 const baseUrl = "http://api.openweathermap.org";
 const apiKey = "52cd117b0f18fb74a6f94c5c52c15753";
 
-type GcsValuesType = {
+type GcsValues = {
   lat: string;
   lon: string;
 };
 
-export type CurrentWeatherType = {
+export type CurrentWeather = {
   main: { temp: number; humidity: number; pressure: number };
   weather: [{ description: string; icon: string }];
   dt: number;
@@ -22,7 +22,7 @@ export type CurrentWeatherType = {
   visibility: number;
 };
 
-export type ForecastWeatherType = {
+export type ForecastWeather = {
   list: [
     {
       dt: number;
@@ -32,15 +32,15 @@ export type ForecastWeatherType = {
   ];
 };
 
-const initialGcsValues: GcsValuesType = {
+const initialGcsValues: GcsValues = {
   lat: "50.45",
   lon: "30.52",
 };
 
 async function fetchCurrentWeather<T extends Record<string, unknown>>(
-  gcsValues: GcsValuesType,
+  gcsValues: GcsValues,
   units: string,
-  onError: (value: string | null) => void
+  onError: (value: Error | null) => void
 ) {
   onError(null);
   const currentWeatherUrl = new URL("/data/2.5/weather", baseUrl);
@@ -53,14 +53,14 @@ async function fetchCurrentWeather<T extends Record<string, unknown>>(
     return (await promise.json()) as T;
   } catch (error) {
     console.error("Error:", error);
-    onError(error as string);
+    onError(error as Error);
   }
 }
 
 async function fetchForecastWeather<T extends Record<string, unknown>>(
-  gcsValues: GcsValuesType,
+  gcsValues: GcsValues,
   units: string,
-  onError: (error: string | null) => void
+  onError: (error: Error | null) => void
 ) {
   onError(null);
   const forecastWeatherUrl = new URL("/data/2.5/forecast", baseUrl);
@@ -73,7 +73,7 @@ async function fetchForecastWeather<T extends Record<string, unknown>>(
     return (await promise.json()) as T;
   } catch (error) {
     console.error("Error:", error);
-    onError(error as string);
+    onError(error as Error);
   }
 }
 
@@ -91,18 +91,16 @@ const setSearchParams = (
 };
 
 const App = () => {
-  const [isActive, onSetIsActive] = useState(false);
-  const [location, onSetLocation] = useState("");
   const [units, onSetUnits] = useState("metric");
-  const [currentUnit, setCurrentUnit] = useState("button-C");
-  const [currentWeather, setCurrentWeather] =
-    useState<CurrentWeatherType | null>(null);
+  const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(
+    null
+  );
   const [forecastWeather, setForecastWeather] =
-    useState<ForecastWeatherType | null>(null);
+    useState<ForecastWeather | null>(null);
   const [gcsValues, setGcsValues] = useState(initialGcsValues);
   const [isLoading, setIsLoading] = useState(false);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
-  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [fetchError, setFetchError] = useState<Error | null>(null);
 
   async function fetchLocation(location: string) {
     const locationUrl = new URL("/geo/1.0/direct", baseUrl);
@@ -149,12 +147,8 @@ const App = () => {
       setIsLoading(true);
       try {
         const [weather, forecast] = await Promise.all([
-          fetchCurrentWeather<CurrentWeatherType>(
-            gcsValues,
-            units,
-            setFetchError
-          ),
-          fetchForecastWeather<ForecastWeatherType>(
+          fetchCurrentWeather<CurrentWeather>(gcsValues, units, setFetchError),
+          fetchForecastWeather<ForecastWeather>(
             gcsValues,
             units,
             setFetchError
@@ -199,11 +193,7 @@ const App = () => {
       ) : (
         <div className="page">
           <CurrentWeatherPanel
-            isActive={isActive}
             searchHistory={searchHistory}
-            onSetLocation={onSetLocation}
-            onSetIsActive={onSetIsActive}
-            location={location}
             fetchLocation={fetchLocation}
             getLocation={getLocation}
             currentWeather={currentWeather}
@@ -213,8 +203,6 @@ const App = () => {
 
           <DetailsPanel
             fetchError={fetchError}
-            setCurrentUnit={setCurrentUnit}
-            currentUnit={currentUnit}
             onSetUnits={onSetUnits}
             forecastWeather={forecastWeather}
             units={units}
