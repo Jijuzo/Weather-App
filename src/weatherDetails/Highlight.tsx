@@ -1,7 +1,7 @@
 import { WindDirection } from "./WindDirection";
 import { ProgressBar } from "./ProgressBar";
 import "./Highlight.css";
-import { CurrentWeatherType } from "../App";
+import { CurrentWeather } from "../App";
 
 type ItemType = {
   name: string;
@@ -15,7 +15,7 @@ type ItemType = {
 type HighlightProps = {
   idx: number;
   units: string;
-  currentWeather: CurrentWeatherType;
+  currentWeather: CurrentWeather;
   item: ItemType;
 };
 

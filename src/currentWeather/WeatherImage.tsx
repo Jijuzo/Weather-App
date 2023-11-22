@@ -1,4 +1,4 @@
-import { CurrentWeatherType } from "../App";
+import { CurrentWeather } from "../App";
 import "./WeatherImage.css";
 
 const baseUrl = "http://openweathermap.org";
@@ -6,7 +6,7 @@ const baseUrl = "http://openweathermap.org";
 export const WeatherImage = ({
   currentWeather,
 }: {
-  currentWeather: CurrentWeatherType;
+  currentWeather: CurrentWeather;
 }) => {
   const imageUrl = new URL(
     `/img/wn/${currentWeather.weather[0].icon}@4x.png`,

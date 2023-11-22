@@ -1,37 +1,46 @@
 import { Footer } from "./Footer";
-import { UnitButtons } from "./UnitButtons";
+import { UnitButton } from "./UnitButtons";
 import { Forecasts } from "./Forecasts";
 import { CurrentWeatherHighlights } from "./CurrentWeatherHighlights";
 import { ErrorAlert } from "./ErrorAlert";
 import "./DetailsPanel.css";
-import { CurrentWeatherType, ForecastWeatherType } from "../App";
+import { CurrentWeather, ForecastWeather } from "../App";
+import { useMemo } from "react";
 
 type DetailsPanelProps = {
-  fetchError: string | null;
-  currentUnit: string;
-  currentWeather: CurrentWeatherType | null;
-  forecastWeather: ForecastWeatherType | null;
+  fetchError: Error | null;
+  currentWeather: CurrentWeather | null;
+  forecastWeather: ForecastWeather | null;
   units: string;
-  setCurrentUnit: React.Dispatch<React.SetStateAction<string>>;
   onSetUnits: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const DetailsPanel = ({
   fetchError,
-  currentUnit,
-  setCurrentUnit,
   onSetUnits,
   forecastWeather,
   units,
   currentWeather,
 }: DetailsPanelProps) => {
+  const activeUnit = useMemo(() => {
+    if (units === "metric") return "C";
+    else return "F";
+  }, [units]);
+
   return (
     <div className="right-side">
-      <UnitButtons
-        onSetUnits={onSetUnits}
-        currentUnit={currentUnit}
-        setCurrentUnit={setCurrentUnit}
-      />
+      <div className="unit-buttons">
+        {["C", "F"].map((unit) => (
+          <UnitButton
+            key={unit}
+            label={unit}
+            activeUnit={activeUnit}
+            onUnitChange={(unit) => {
+              onSetUnits(unit === "C" ? "metric" : "imperial");
+            }}
+          />
+        ))}
+      </div>
       {forecastWeather && currentWeather && (
         <Forecasts forecastWeather={forecastWeather} units={units} />
       )}

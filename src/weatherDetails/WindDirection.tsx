@@ -1,4 +1,4 @@
-import { CurrentWeatherType } from "../App";
+import { CurrentWeather } from "../App";
 import "./WindDirection.css";
 
 const directions = [
@@ -23,7 +23,7 @@ const directions = [
 export function WindDirection({
   currentWeather,
 }: {
-  currentWeather: CurrentWeatherType;
+  currentWeather: CurrentWeather;
 }) {
   return (
     <div className="highlight-additional">
