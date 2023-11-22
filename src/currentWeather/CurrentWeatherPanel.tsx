@@ -1,41 +1,33 @@
-import React from "react";
+import { useState } from "react";
 import { SearchPanel } from "./SearchPanel";
 import { CurrentWeatherAside } from "./CurrentWeatherAside";
 import "./CurrentWeatherPanel.css";
-import { CurrentWeatherType, ForecastWeatherType } from "../App";
+import { CurrentWeather, ForecastWeather } from "../App";
 
 type CurrentWeatherPanelProps = {
-  isActive: boolean;
   searchHistory: string[];
-  onSetLocation: React.Dispatch<React.SetStateAction<string>>;
-  onSetIsActive: React.Dispatch<React.SetStateAction<boolean>>;
-  location: string;
   fetchLocation: (location: string) => Promise<void>;
   getLocation: () => void;
-  currentWeather: CurrentWeatherType | null;
-  forecastWeather: ForecastWeatherType | null;
+  currentWeather: CurrentWeather | null;
+  forecastWeather: ForecastWeather | null;
   units: string;
 };
 
 export const CurrentWeatherPanel = ({
-  isActive,
   searchHistory,
-  onSetLocation,
-  onSetIsActive,
-  location,
   fetchLocation,
   getLocation,
   currentWeather,
   forecastWeather,
   units,
 }: CurrentWeatherPanelProps) => {
+  const [isActive, onSetIsActive] = useState(false);
+
   return (
     <aside className="searchbar">
       <SearchPanel
         isActive={isActive}
-        onSetLocation={onSetLocation}
         onSetIsActive={onSetIsActive}
-        location={location}
         onSubmit={fetchLocation}
         searchHistory={searchHistory}
       />
