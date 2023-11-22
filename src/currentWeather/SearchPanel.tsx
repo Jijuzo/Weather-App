@@ -1,24 +1,22 @@
-import React from "react";
+import { useState } from "react";
 import "./SearchPanel.css";
 import { SearchHistory } from "./SearchHistory";
 
 type SearchPanelProps = {
   isActive: boolean;
-  onSetLocation: React.Dispatch<React.SetStateAction<string>>;
   onSetIsActive: React.Dispatch<React.SetStateAction<boolean>>;
-  location: string;
   onSubmit: (location: string) => Promise<void>;
   searchHistory: string[];
 };
 
 export const SearchPanel = ({
   isActive,
-  onSetLocation,
   onSetIsActive,
-  location,
   onSubmit,
   searchHistory,
 }: SearchPanelProps) => {
+  const [location, onSetLocation] = useState("");
+
   function handleSubmit(event: React.FormEvent<HTMLElement>) {
     event.preventDefault();
 
