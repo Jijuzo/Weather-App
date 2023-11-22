@@ -48,12 +48,12 @@ export const CurrentWeatherHighlights = ({
 
   return (
     <div className="hightlights-container">
-      {highlights.map((item, idx) => (
+      {highlights.map((highlight, idx) => (
         <Highlight
           idx={idx}
           units={units}
           currentWeather={currentWeather}
-          item={item}
+          highlight={highlight}
           key={idx}
         />
       ))}
