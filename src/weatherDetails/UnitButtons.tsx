@@ -1,35 +1,20 @@
 import "./UnitButtons.css";
 
-type UnitButtonsProps = {
-  currentUnit: string;
-  onSetUnits: React.Dispatch<React.SetStateAction<string>>;
-  setCurrentUnit: React.Dispatch<React.SetStateAction<string>>;
+type UnitButtonProp = {
+  label: string;
+  onUnitChange: (activeUnit: string) => void;
+  activeUnit: string;
 };
 
-export const UnitButtons = ({
-  currentUnit,
-  onSetUnits,
-  setCurrentUnit,
-}: UnitButtonsProps) => {
-  const onUnitChange = (activeId: string, units: string) => {
-    setCurrentUnit(activeId);
-    onSetUnits(units);
-  };
-
+export const UnitButton = ({
+  label,
+  onUnitChange,
+  activeUnit,
+}: UnitButtonProp) => {
   return (
-    <div className="unit-buttons">
-      {["C", "F"].map((unit) => (
-        <button
-          key={`button-${unit}`}
-          onClick={() =>
-            onUnitChange(`button-${unit}`, unit === "C" ? "metric" : "imperial")
-          }
-          className={`top-button ${
-            currentUnit === `button-${unit}` ? "active" : ""
-          }`}
-          id={`button-${unit}`}
-        >{`°${unit}`}</button>
-      ))}
-    </div>
+    <button
+      className={`top-button ${activeUnit === label ? "active" : ""}`}
+      onClick={() => onUnitChange(label)}
+    >{`°${label}`}</button>
   );
 };
