@@ -32,6 +32,8 @@ export type ForecastWeather = {
   ];
 };
 
+type OnError = (error: Error | null) => void;
+
 const initialGcsValues: GcsValues = {
   lat: "50.45",
   lon: "30.52",
@@ -40,7 +42,7 @@ const initialGcsValues: GcsValues = {
 async function fetchCurrentWeather<T extends Record<string, unknown>>(
   gcsValues: GcsValues,
   units: string,
-  onError: (value: Error | null) => void
+  onError: OnError
 ) {
   onError(null);
   const currentWeatherUrl = new URL("/data/2.5/weather", baseUrl);
@@ -60,7 +62,7 @@ async function fetchCurrentWeather<T extends Record<string, unknown>>(
 async function fetchForecastWeather<T extends Record<string, unknown>>(
   gcsValues: GcsValues,
   units: string,
-  onError: (error: Error | null) => void
+  onError: OnError
 ) {
   onError(null);
   const forecastWeatherUrl = new URL("/data/2.5/forecast", baseUrl);
