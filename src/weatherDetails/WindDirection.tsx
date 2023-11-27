@@ -1,4 +1,4 @@
-import { CurrentWeather } from "../App";
+import { CurrentWeather } from "../types";
 import "./WindDirection.css";
 
 const directions = [

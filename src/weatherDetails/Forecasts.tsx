@@ -1,7 +1,7 @@
 import { formatDate } from "../utils/formatDate";
 import { Forecast } from "./Forecast";
 import "./Forecasts.css";
-import { ForecastWeather } from "../App";
+import { ForecastWeather } from "../types";
 
 // Define the starting index for the forecast data.
 const startPoint = 6;

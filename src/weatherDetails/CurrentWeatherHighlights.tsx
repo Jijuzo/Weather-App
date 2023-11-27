@@ -1,6 +1,6 @@
 import { Highlight } from "./Highlight";
 import "./CurrentWeatherHighlights.css";
-import { CurrentWeather } from "../App";
+import { CurrentWeather } from "../types";
 
 type CurrentWeatherHighlightsProps = {
   currentWeather: CurrentWeather;

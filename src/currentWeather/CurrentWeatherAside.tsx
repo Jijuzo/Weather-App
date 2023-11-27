@@ -2,7 +2,7 @@ import { WeatherImage } from "./WeatherImage";
 import { formatDate } from "../utils/formatDate";
 import { TemperatureUnit } from "../weatherDetails/TemperatureUnit";
 import "./CurrentWeatherAside.css";
-import { CurrentWeather } from "../App";
+import { CurrentWeather } from "../types";
 
 type CurrentWeatherAsideProps = {
   currentWeather: CurrentWeather;

@@ -1,7 +1,7 @@
 import "./Highlight.css";
 import { WindDirection } from "./WindDirection";
 import { ProgressBar } from "./ProgressBar";
-import { CurrentWeather } from "../App";
+import { CurrentWeather } from "../types";
 
 type ItemType = {
   name: string;

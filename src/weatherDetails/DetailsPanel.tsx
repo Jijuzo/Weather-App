@@ -4,7 +4,7 @@ import { Forecasts } from "./Forecasts";
 import { CurrentWeatherHighlights } from "./CurrentWeatherHighlights";
 import { ErrorAlert } from "./ErrorAlert";
 import "./DetailsPanel.css";
-import { CurrentWeather, ForecastWeather } from "../App";
+import { CurrentWeather, ForecastWeather } from "../types";
 import { useMemo } from "react";
 
 type DetailsPanelProps = {
@@ -12,7 +12,7 @@ type DetailsPanelProps = {
   currentWeather: CurrentWeather | null;
   forecastWeather: ForecastWeather | null;
   units: string;
-  onSetUnits: React.Dispatch<React.SetStateAction<string>>;
+  onSetUnits: (unit: string) => void;
 };
 
 export const DetailsPanel = ({
@@ -23,8 +23,7 @@ export const DetailsPanel = ({
   currentWeather,
 }: DetailsPanelProps) => {
   const activeUnit = useMemo(() => {
-    if (units === "metric") return "C";
-    else return "F";
+    return units === "metric" ? "C" : "F";
   }, [units]);
 
   return (
