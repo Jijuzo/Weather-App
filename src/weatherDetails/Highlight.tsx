@@ -1,9 +1,9 @@
 import "./Highlight.css";
 import { WindDirection } from "./WindDirection";
 import { ProgressBar } from "./ProgressBar";
-import { CurrentWeather } from "../types";
+import { CurrentWeather, Units } from "../types";
 
-type ItemType = {
+type Item = {
   name: string;
   value: string | number;
   unit: {
@@ -14,9 +14,9 @@ type ItemType = {
 
 type HighlightProps = {
   idx: number;
-  units: string;
+  units: Units;
   currentWeather: CurrentWeather;
-  highlight: ItemType;
+  highlight: Item;
 };
 
 export function Highlight({

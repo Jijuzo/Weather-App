@@ -1,6 +1,6 @@
 import { DetailsPanel } from "./weatherDetails/DetailsPanel";
 import { CurrentWeatherPanel } from "./currentWeather/CurrentWeatherPanel";
-import { CurrentWeather, ForecastWeather } from "./types";
+import { CurrentWeather, ForecastWeather, Units } from "./types";
 import { createRoot } from "react-dom/client";
 import { useEffect, useReducer, useState } from "react";
 import { DotSpinner } from "@uiball/loaders";
@@ -22,7 +22,7 @@ type onError = (error: Error) => void;
 
 async function fetchCurrentWeather(
   gcsValues: GcsValues,
-  units: string,
+  units: Units,
   onError: onError
 ) {
   const currentWeatherUrl = new URL("/data/2.5/weather", baseUrl);
@@ -41,7 +41,7 @@ async function fetchCurrentWeather(
 
 async function fetchForecastWeather(
   gcsValues: GcsValues,
-  units: string,
+  units: Units,
   onError: onError
 ) {
   const forecastWeatherUrl = new URL("/data/2.5/forecast", baseUrl);
@@ -62,7 +62,7 @@ const setSearchParams = (
   givenUrl: URL,
   lat: string,
   lon: string,
-  units: string
+  units: Units
 ) => {
   const searchParams = givenUrl.searchParams;
   searchParams.append("lat", lat);
@@ -121,7 +121,7 @@ const weatherReducer = (state: weatherDataState, action: weatherDataAction) => {
 };
 
 const App = () => {
-  const [units, setUnits] = useState("metric");
+  const [units, setUnits] = useState<Units>("metric");
   const [gcsValues, setGcsValues] = useState(initialGcsValues);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [weatherState, dispatch] = useReducer(weatherReducer, {
@@ -233,7 +233,7 @@ const App = () => {
 
           <DetailsPanel
             fetchError={weatherState.error as Error}
-            onSetUnits={(unit) => {
+            onSetUnits={(unit: Units) => {
               setUnits(unit);
             }}
             forecastWeather={weatherState.forecastWeather}

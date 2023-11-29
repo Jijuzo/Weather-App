@@ -1,7 +1,7 @@
 import { formatDate } from "../utils/formatDate";
 import { Forecast } from "./Forecast";
 import "./Forecasts.css";
-import { ForecastWeather } from "../types";
+import { ForecastWeather, Units } from "../types";
 
 // Define the starting index for the forecast data.
 const startPoint = 6;
@@ -15,7 +15,7 @@ export const Forecasts = ({
   units,
 }: {
   forecastWeather: ForecastWeather;
-  units: string;
+  units: Units;
 }) => {
   const forecasts = [];
   for (let i = startPoint; i <= endPoint; i += step) {

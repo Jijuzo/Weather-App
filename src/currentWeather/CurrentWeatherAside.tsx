@@ -2,11 +2,11 @@ import { WeatherImage } from "./WeatherImage";
 import { formatDate } from "../utils/formatDate";
 import { TemperatureUnit } from "../weatherDetails/TemperatureUnit";
 import "./CurrentWeatherAside.css";
-import { CurrentWeather } from "../types";
+import { CurrentWeather, Units } from "../types";
 
 type CurrentWeatherAsideProps = {
   currentWeather: CurrentWeather;
-  units: string;
+  units: Units;
 };
 
 export const CurrentWeatherAside = ({

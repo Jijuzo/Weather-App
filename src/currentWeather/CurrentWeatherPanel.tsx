@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SearchPanel } from "./SearchPanel";
 import { CurrentWeatherAside } from "./CurrentWeatherAside";
 import "./CurrentWeatherPanel.css";
-import { CurrentWeather, ForecastWeather } from "../types";
+import { CurrentWeather, ForecastWeather, Units } from "../types";
 
 type CurrentWeatherPanelProps = {
   searchHistory: string[];
@@ -10,7 +10,7 @@ type CurrentWeatherPanelProps = {
   onMyLocation: () => void;
   currentWeather: CurrentWeather | null;
   forecastWeather: ForecastWeather | null;
-  units: string;
+  units: Units;
 };
 export const CurrentWeatherPanel = ({
   searchHistory,

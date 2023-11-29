@@ -1,6 +1,7 @@
 import { ForecastImage } from "./ForecastImage";
 import "./Forecast.css";
 import { TemperatureUnit } from "./TemperatureUnit";
+import { Units } from "../types";
 
 type ForecastProps = {
   date: string;
@@ -8,7 +9,7 @@ type ForecastProps = {
   tempMax: number;
   tempMin: number;
   description: string;
-  units: string;
+  units: Units;
 };
 
 export const Forecast = ({

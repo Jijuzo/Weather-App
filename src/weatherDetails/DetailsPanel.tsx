@@ -1,18 +1,18 @@
 import { Footer } from "./Footer";
-import { UnitButton } from "./UnitButtons";
+import { UnitButton } from "./UnitButton";
 import { Forecasts } from "./Forecasts";
 import { CurrentWeatherHighlights } from "./CurrentWeatherHighlights";
 import { ErrorAlert } from "./ErrorAlert";
 import "./DetailsPanel.css";
-import { CurrentWeather, ForecastWeather } from "../types";
+import { CurrentWeather, ForecastWeather, Units } from "../types";
 import { useMemo } from "react";
 
 type DetailsPanelProps = {
   fetchError: Error;
   currentWeather: CurrentWeather | null;
   forecastWeather: ForecastWeather | null;
-  units: string;
-  onSetUnits: (unit: string) => void;
+  units: Units;
+  onSetUnits: (unit: Units) => void;
 };
 
 export const DetailsPanel = ({
@@ -34,8 +34,8 @@ export const DetailsPanel = ({
             key={unit}
             label={unit}
             activeUnit={activeUnit}
-            onUnitChange={(unit) => {
-              onSetUnits(unit === "C" ? "metric" : "imperial");
+            onUnitChange={(activeUnit) => {
+              onSetUnits(activeUnit === "C" ? "metric" : "imperial");
             }}
           />
         ))}

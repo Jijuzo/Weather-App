@@ -17,3 +17,5 @@ export type ForecastWeather = {
     }
   ];
 };
+
+export type Units = "metric" | "imperial";

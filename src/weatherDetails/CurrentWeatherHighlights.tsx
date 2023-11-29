@@ -1,10 +1,10 @@
 import { Highlight } from "./Highlight";
 import "./CurrentWeatherHighlights.css";
-import { CurrentWeather } from "../types";
+import { CurrentWeather, Units } from "../types";
 
 type CurrentWeatherHighlightsProps = {
   currentWeather: CurrentWeather;
-  units: string;
+  units: Units;
 };
 
 export const CurrentWeatherHighlights = ({
