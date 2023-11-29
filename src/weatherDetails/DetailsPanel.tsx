@@ -8,7 +8,7 @@ import { CurrentWeather, ForecastWeather } from "../types";
 import { useMemo } from "react";
 
 type DetailsPanelProps = {
-  fetchError: Error | null;
+  fetchError: Error;
   currentWeather: CurrentWeather | null;
   forecastWeather: ForecastWeather | null;
   units: string;

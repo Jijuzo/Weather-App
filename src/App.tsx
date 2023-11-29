@@ -2,7 +2,7 @@ import { DetailsPanel } from "./weatherDetails/DetailsPanel";
 import { CurrentWeatherPanel } from "./currentWeather/CurrentWeatherPanel";
 import { CurrentWeather, ForecastWeather } from "./types";
 import { createRoot } from "react-dom/client";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { DotSpinner } from "@uiball/loaders";
 
 const baseUrl = "http://api.openweathermap.org";
@@ -13,22 +13,21 @@ type GcsValues = {
   lon: string;
 };
 
-type OnError = (error: Error | null) => void;
-
 const initialGcsValues: GcsValues = {
   lat: "50.45",
   lon: "30.52",
 };
 
+type onError = (error: Error) => void;
+
 async function fetchCurrentWeather(
   gcsValues: GcsValues,
   units: string,
-  onError: OnError
+  onError: onError
 ) {
   const currentWeatherUrl = new URL("/data/2.5/weather", baseUrl);
   setSearchParams(currentWeatherUrl, gcsValues.lat, gcsValues.lon, units);
   try {
-    onError(null);
     const promise = await fetch(currentWeatherUrl);
     if (!promise.ok) {
       throw new Error(`HTTP error! Status: ${promise.status}`);
@@ -43,12 +42,11 @@ async function fetchCurrentWeather(
 async function fetchForecastWeather(
   gcsValues: GcsValues,
   units: string,
-  onError: OnError
+  onError: onError
 ) {
   const forecastWeatherUrl = new URL("/data/2.5/forecast", baseUrl);
   setSearchParams(forecastWeatherUrl, gcsValues.lat, gcsValues.lon, units);
   try {
-    onError(null);
     const promise = await fetch(forecastWeatherUrl);
     if (!promise.ok) {
       throw new Error(`HTTP error! Status: ${promise.status}`);
@@ -73,17 +71,69 @@ const setSearchParams = (
   searchParams.append("appid", apiKey);
 };
 
+type weatherDataAction =
+  | {
+      type: "success";
+      payload: {
+        currentWeather: CurrentWeather;
+        forecastWeather: ForecastWeather;
+      };
+    }
+  | { type: "error"; payload: { error: Error } }
+  | { type: "loading" }
+  | { type: "idle" };
+
+type weatherDataState = {
+  currentWeather: CurrentWeather | null;
+  forecastWeather: ForecastWeather | null;
+  error: Error | null;
+  isLoading: boolean;
+};
+
+const weatherReducer = (state: weatherDataState, action: weatherDataAction) => {
+  switch (action.type) {
+    case "success":
+      return {
+        currentWeather: action.payload.currentWeather,
+        forecastWeather: action.payload.forecastWeather,
+        error: null,
+        isLoading: false,
+      };
+    case "loading":
+      return {
+        ...state,
+        error: null,
+        isLoading: true,
+      };
+    case "error":
+      return {
+        currentWeather: null,
+        forecastWeather: null,
+        error: action.payload.error,
+        isLoading: false,
+      };
+    case "idle":
+      return {
+        ...state,
+        isLoading: false,
+      };
+  }
+};
+
 const App = () => {
   const [units, setUnits] = useState("metric");
-  const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(
-    null
-  );
-  const [forecastWeather, setForecastWeather] =
-    useState<ForecastWeather | null>(null);
   const [gcsValues, setGcsValues] = useState(initialGcsValues);
-  const [isLoading, setIsLoading] = useState(false);
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
-  const [error, setError] = useState<Error | null>(null);
+  const [weatherState, dispatch] = useReducer(weatherReducer, {
+    currentWeather: null,
+    forecastWeather: null,
+    error: null,
+    isLoading: false,
+  });
+
+  const onError = (error: Error) => {
+    dispatch({ type: "error", payload: { error } });
+  };
 
   async function fetchLocation(location: string) {
     const locationUrl = new URL("/geo/1.0/direct", baseUrl);
@@ -123,18 +173,21 @@ const App = () => {
 
   useEffect(() => {
     const fetchRequiredData = async () => {
-      setIsLoading(true);
+      dispatch({ type: "loading" });
       try {
         const [weather, forecast] = await Promise.all([
-          fetchCurrentWeather(gcsValues, units, setError),
-          fetchForecastWeather(gcsValues, units, setError),
+          fetchCurrentWeather(gcsValues, units, onError),
+          fetchForecastWeather(gcsValues, units, onError),
         ]);
-        if (weather) setCurrentWeather(weather);
-        if (forecast) setForecastWeather(forecast);
+        if (weather && forecast)
+          dispatch({
+            type: "success",
+            payload: { currentWeather: weather, forecastWeather: forecast },
+          });
       } catch (error) {
         console.error("Error", error);
       } finally {
-        setIsLoading(false);
+        dispatch({ type: "idle" });
       }
     };
     fetchRequiredData();
@@ -161,7 +214,7 @@ const App = () => {
 
   return (
     <main>
-      {isLoading ? (
+      {weatherState.isLoading ? (
         <div className="spinner-container">
           <DotSpinner size={50} color="#FFFFFF" />
         </div>
@@ -173,19 +226,19 @@ const App = () => {
               fetchLocation(value);
             }}
             onMyLocation={getLocation}
-            currentWeather={currentWeather}
-            forecastWeather={forecastWeather}
+            currentWeather={weatherState.currentWeather}
+            forecastWeather={weatherState.forecastWeather}
             units={units}
           />
 
           <DetailsPanel
-            fetchError={error}
+            fetchError={weatherState.error as Error}
             onSetUnits={(unit) => {
               setUnits(unit);
             }}
-            forecastWeather={forecastWeather}
+            forecastWeather={weatherState.forecastWeather}
             units={units}
-            currentWeather={currentWeather}
+            currentWeather={weatherState.currentWeather}
           />
         </div>
       )}
