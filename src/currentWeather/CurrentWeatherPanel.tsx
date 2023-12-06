@@ -26,7 +26,7 @@ export const CurrentWeatherPanel = ({
     <aside className="searchbar">
       <SearchPanel
         isActive={isActive}
-        onSetIsActive={(value) => setIsActive(value)}
+        onClose={() => setIsActive(false)}
         onSubmit={(value) => {
           onSearch(value);
           setIsActive(false);

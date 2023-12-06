@@ -233,7 +233,7 @@ const App = () => {
 
           <DetailsPanel
             fetchError={weatherState.error as Error}
-            onSetUnits={(unit: Units) => {
+            onUnitChange={(unit: Units) => {
               setUnits(unit);
             }}
             forecastWeather={weatherState.forecastWeather}

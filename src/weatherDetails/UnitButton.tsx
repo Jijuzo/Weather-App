@@ -1,8 +1,9 @@
+import { Units } from "../types";
 import "./UnitButtons.css";
 
-type UnitButtonProp = {
+type UnitButtonProps = {
   label: string;
-  onUnitChange: (activeUnit: string) => void;
+  onUnitChange: (activeUnit: Units) => void;
   activeUnit: string;
 };
 
@@ -10,11 +11,11 @@ export const UnitButton = ({
   label,
   onUnitChange,
   activeUnit,
-}: UnitButtonProp) => {
+}: UnitButtonProps) => {
   return (
     <button
       className={`top-button ${activeUnit === label ? "active" : ""}`}
-      onClick={() => onUnitChange(label)}
+      onClick={() => onUnitChange(label === "C" ? "metric" : "imperial")}
     >{`°${label}`}</button>
   );
 };

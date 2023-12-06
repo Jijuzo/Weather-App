@@ -4,14 +4,14 @@ import { SearchHistory } from "./SearchHistory";
 
 type SearchPanelProps = {
   isActive: boolean;
-  onSetIsActive: (value: boolean) => void;
+  onClose: () => void;
   onSubmit: (location: string) => void;
   searchHistory: string[];
 };
 
 export const SearchPanel = ({
   isActive,
-  onSetIsActive,
+  onClose,
   onSubmit,
   searchHistory,
 }: SearchPanelProps) => {
@@ -33,7 +33,7 @@ export const SearchPanel = ({
         <button
           className="close-button"
           onClick={() => {
-            onSetIsActive(false);
+            onClose();
             setLocation("");
           }}
         >

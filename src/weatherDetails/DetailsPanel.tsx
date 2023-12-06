@@ -12,12 +12,12 @@ type DetailsPanelProps = {
   currentWeather: CurrentWeather | null;
   forecastWeather: ForecastWeather | null;
   units: Units;
-  onSetUnits: (unit: Units) => void;
+  onUnitChange: (unit: Units) => void;
 };
 
 export const DetailsPanel = ({
   fetchError,
-  onSetUnits,
+  onUnitChange,
   forecastWeather,
   units,
   currentWeather,
@@ -35,7 +35,7 @@ export const DetailsPanel = ({
             label={unit}
             activeUnit={activeUnit}
             onUnitChange={(activeUnit) => {
-              onSetUnits(activeUnit === "C" ? "metric" : "imperial");
+              onUnitChange(activeUnit);
             }}
           />
         ))}
