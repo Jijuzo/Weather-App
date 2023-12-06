@@ -2,12 +2,12 @@ import "./SearchHistory.css";
 
 type SearchHistoryProps = {
   searchHistory: string[];
-  onclick: (e: React.MouseEvent<HTMLElement>) => void;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 export const SearchHistory = ({
   searchHistory,
-  onclick,
+  onClick,
 }: SearchHistoryProps) => {
   return (
     <div className="search-history-div">
@@ -18,7 +18,7 @@ export const SearchHistory = ({
             <button
               className="search-history-ul-item-button"
               value={name}
-              onClick={onclick}
+              onClick={onClick}
             >
               {name}
             </button>

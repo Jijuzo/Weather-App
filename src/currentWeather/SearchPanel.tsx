@@ -64,7 +64,7 @@ export const SearchPanel = ({
       </div>
       <SearchHistory
         searchHistory={searchHistory}
-        onclick={(e) => {
+        onClick={(e) => {
           onSubmit((e.target as HTMLInputElement).value);
           setLocation("");
         }}
