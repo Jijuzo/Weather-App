@@ -1,6 +1,16 @@
 import { ForecastImage } from "./ForecastImage";
 import "./Forecast.css";
 import { TemperatureUnit } from "./TemperatureUnit";
+import { Units } from "../types";
+
+type ForecastProps = {
+  date: string;
+  icon: string;
+  tempMax: number;
+  tempMin: number;
+  description: string;
+  units: Units;
+};
 
 export const Forecast = ({
   date,
@@ -9,7 +19,7 @@ export const Forecast = ({
   tempMin,
   description,
   units,
-}) => {
+}: ForecastProps) => {
   return (
     <div className="forecast">
       <p className="forecast-date">{date}</p>

@@ -1,26 +1,30 @@
-import React from "react";
+import { useState } from "react";
 import "./SearchPanel.css";
 import { SearchHistory } from "./SearchHistory";
 
+type SearchPanelProps = {
+  isActive: boolean;
+  onClose: () => void;
+  onSubmit: (location: string) => void;
+  searchHistory: string[];
+};
+
 export const SearchPanel = ({
   isActive,
-  onSetLocation,
-  onSetIsActive,
-  location,
+  onClose,
   onSubmit,
   searchHistory,
-}) => {
-  function handleSubmit(event) {
-    event.preventDefault();
+}: SearchPanelProps) => {
+  const [location, setLocation] = useState("");
 
+  function handleSubmit(e: React.FormEvent<HTMLElement>) {
+    e.preventDefault();
     if (location.trim() === "") {
       alert("Please enter a valid location.");
       return;
     }
-
     onSubmit(location);
-    onSetIsActive(false);
-    onSetLocation("");
+    setLocation("");
   }
 
   return (
@@ -29,8 +33,8 @@ export const SearchPanel = ({
         <button
           className="close-button"
           onClick={() => {
-            onSetIsActive(false);
-            onSetLocation("");
+            onClose();
+            setLocation("");
           }}
         >
           <span className=" material-symbols-outlined">close</span>
@@ -50,7 +54,7 @@ export const SearchPanel = ({
               className="search-input"
               placeholder="search location"
               value={location}
-              onChange={(e) => onSetLocation(e.target.value)}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </form>
         </div>
@@ -60,10 +64,10 @@ export const SearchPanel = ({
       </div>
       <SearchHistory
         searchHistory={searchHistory}
-        onSetLocation={onSetLocation}
-        onClick={onSubmit}
-        onSetIsActive={onSetIsActive}
-        location={location}
+        onClick={(e) => {
+          onSubmit((e.target as HTMLInputElement).value);
+          setLocation("");
+        }}
       />
     </div>
   );

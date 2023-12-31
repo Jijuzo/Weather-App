@@ -1,4 +1,3 @@
-import React from "react";
 import "./Footer.css";
 
 export const Footer = () => {
@@ -9,8 +8,7 @@ export const Footer = () => {
         <a className="link" href="https://github.com/Jijuzo">
           Jijuzo
         </a>
-      </strong>{" "}
-      - devChallenges.io
+      </strong>
     </footer>
   );
 };

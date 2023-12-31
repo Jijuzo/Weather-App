@@ -1,7 +1,7 @@
-import React from "react";
 import { formatDate } from "../utils/formatDate";
 import { Forecast } from "./Forecast";
 import "./Forecasts.css";
+import { ForecastWeather, Units } from "../types";
 
 // Define the starting index for the forecast data.
 const startPoint = 6;
@@ -10,7 +10,13 @@ const endPoint = 38;
 // Define the step size to iterate through the forecast data.
 const step = 8;
 
-export const Forecasts = ({ forecastWeather, units }) => {
+export const Forecasts = ({
+  forecastWeather,
+  units,
+}: {
+  forecastWeather: ForecastWeather;
+  units: Units;
+}) => {
   const forecasts = [];
   for (let i = startPoint; i <= endPoint; i += step) {
     forecasts.push({

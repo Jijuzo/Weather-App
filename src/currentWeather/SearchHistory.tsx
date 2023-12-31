@@ -1,17 +1,14 @@
 import "./SearchHistory.css";
 
+type SearchHistoryProps = {
+  searchHistory: string[];
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+};
+
 export const SearchHistory = ({
   searchHistory,
-  onSetLocation,
   onClick,
-  onSetIsActive,
-}) => {
-  function handleClick(event) {
-    onClick(event.target.value);
-    onSetIsActive(false);
-    onSetLocation("");
-  }
-
+}: SearchHistoryProps) => {
   return (
     <div className="search-history-div">
       <h2 className="search-history-header">Search History</h2>
@@ -21,7 +18,7 @@ export const SearchHistory = ({
             <button
               className="search-history-ul-item-button"
               value={name}
-              onClick={handleClick}
+              onClick={onClick}
             >
               {name}
             </button>

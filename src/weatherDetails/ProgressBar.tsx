@@ -1,6 +1,6 @@
 import "./ProgressBar.css";
 
-export const ProgressBar = ({ value }) => {
+export const ProgressBar = ({ value }: { value: number }) => {
   return (
     <div className="highlight-additional">
       <div className="slider-numbers">

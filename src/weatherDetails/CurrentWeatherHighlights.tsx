@@ -1,7 +1,16 @@
 import { Highlight } from "./Highlight";
 import "./CurrentWeatherHighlights.css";
+import { CurrentWeather, Units } from "../types";
 
-export const CurrentWeatherHighlights = ({ currentWeather, units }) => {
+type CurrentWeatherHighlightsProps = {
+  currentWeather: CurrentWeather;
+  units: Units;
+};
+
+export const CurrentWeatherHighlights = ({
+  currentWeather,
+  units,
+}: CurrentWeatherHighlightsProps) => {
   const highlights = [
     {
       name: "Wind status",
@@ -21,7 +30,7 @@ export const CurrentWeatherHighlights = ({ currentWeather, units }) => {
     },
     {
       name: "Visibility",
-      value: currentWeather.visibility.toFixed(2) / 1000,
+      value: Number(currentWeather.visibility.toFixed(2)) / 1000,
       unit: {
         metric: "km",
         imperial: "miles",
@@ -39,12 +48,12 @@ export const CurrentWeatherHighlights = ({ currentWeather, units }) => {
 
   return (
     <div className="hightlights-container">
-      {highlights.map((item, idx) => (
+      {highlights.map((highlight, idx) => (
         <Highlight
           idx={idx}
           units={units}
           currentWeather={currentWeather}
-          item={item}
+          highlight={highlight}
           key={idx}
         />
       ))}

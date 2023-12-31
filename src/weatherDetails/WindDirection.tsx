@@ -1,4 +1,4 @@
-import React from "react";
+import { CurrentWeather } from "../types";
 import "./WindDirection.css";
 
 const directions = [
@@ -20,7 +20,11 @@ const directions = [
   { range: [337, 359], name: "NNW" },
 ];
 
-export function WindDirection({ currentWeather }) {
+export function WindDirection({
+  currentWeather,
+}: {
+  currentWeather: CurrentWeather;
+}) {
   return (
     <div className="highlight-additional">
       {degreesToText(currentWeather.wind.deg) === "no data" ? (
@@ -42,7 +46,7 @@ export function WindDirection({ currentWeather }) {
   );
 }
 
-function degreesToText(deg) {
+function degreesToText(deg: number) {
   const matchedDirection = directions.find(
     ({ range }) => deg >= range[0] && deg <= range[1]
   );

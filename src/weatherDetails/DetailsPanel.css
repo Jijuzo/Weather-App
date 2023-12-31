@@ -1,4 +1,4 @@
-.rightside {
+.right-side {
   position: relative;
   height: 100%;
   padding: 5vh 7vw 1vh 7vw;
@@ -6,15 +6,15 @@
   background-color: var(--color-black);
 }
 
-.hightlights-header {
+.highlights-header {
   font-family: var(--font-family-default);
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-hightlights-header);
+  font-size: var(--font-size-highlights-header);
   color: var(--color-white);
 }
 
 @media (max-width: 700px) {
-  .hightlights-header {
+  .highlights-header {
     text-align: center;
   }
 }

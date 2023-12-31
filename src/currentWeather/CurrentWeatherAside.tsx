@@ -2,8 +2,17 @@ import { WeatherImage } from "./WeatherImage";
 import { formatDate } from "../utils/formatDate";
 import { TemperatureUnit } from "../weatherDetails/TemperatureUnit";
 import "./CurrentWeatherAside.css";
+import { CurrentWeather, Units } from "../types";
 
-export const CurrentWeatherAside = ({ currentWeather, units }) => {
+type CurrentWeatherAsideProps = {
+  currentWeather: CurrentWeather;
+  units: Units;
+};
+
+export const CurrentWeatherAside = ({
+  currentWeather,
+  units,
+}: CurrentWeatherAsideProps) => {
   return (
     <div>
       <WeatherImage currentWeather={currentWeather} />
