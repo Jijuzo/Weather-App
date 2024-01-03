@@ -52,6 +52,9 @@ body {
   cursor: pointer;
   border: solid 1px transparent;
   border-radius: 54px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
 }
 
 .top-button.active {
