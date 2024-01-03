@@ -1,7 +1,7 @@
 import { CurrentWeather } from "../types";
 import "./WeatherImage.css";
 
-const baseUrl = "http://openweathermap.org";
+const baseUrl = "https://openweathermap.org";
 
 export const WeatherImage = ({
   currentWeather,
