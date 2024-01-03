@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 import { useEffect, useReducer, useState } from "react";
 import { DotSpinner } from "@uiball/loaders";
 
-const baseUrl = "http://api.openweathermap.org";
+const baseUrl = "https://api.openweathermap.org";
 const apiKey = "52cd117b0f18fb74a6f94c5c52c15753";
 
 type GcsValues = {
