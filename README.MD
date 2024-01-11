@@ -1,5 +1,7 @@
 # Weather App
 
+<a href="https://jijuzoweatherapp.vercel.app/">Live Demo</a>
+
 Simple weather application built with React, Vite, and TypeScript.
 
 ## Table of Contents
